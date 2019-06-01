@@ -729,7 +729,7 @@ def guoji_fix(result,or_objs):
 
 def get_ent_type(  ):
     type_dict = {}
-    with open('D:/data/IE/all_50_schemas','r',encoding='utf8') as f:
+    with open('../inputs/all_50_schemas','r',encoding='utf8') as f:
         for l in f:
             a = json.loads(l)
             t = {}
@@ -767,7 +767,8 @@ def find_max_len_ent( result ):
                     # raise
                 temp_ent = ent
         if temp_ent == '':
-            raise
+            # raise
+            pass
 
         return temp_ent
 
@@ -907,8 +908,8 @@ def cd_fix(result):
 
 def result_process(result,save_file):
 
-    train_data = json.load(open('D:/data/IE/train_data_me.json', encoding='utf-8'))
-    dev_data = json.load(open('D:/data/IE/dev_data_me.json', encoding='utf-8'))
+    train_data = json.load(open('../inputs/train_data_me.json', encoding='utf-8'))
+    dev_data = json.load(open('../inputs/dev_data_me.json', encoding='utf-8'))
 
     train_data += dev_data
     index0 = split_chupingongsi(result)
@@ -944,7 +945,7 @@ def result_process(result,save_file):
     renkou_fix(result)
 
     # cd_fix(result) #朝代 5/19
-    do_clean_515(result,get_objs('D:/data/IE/test_data_postag.json'),get_objs('D:/data/IE/train_data.json'),get_objs('D:/data/IE/dev_data.json'))
+    do_clean_515(result,get_objs('../inputs/test_data_postag.json'),get_objs('../inputs/train_data.json'),get_objs('../inputs/dev_data.json'))
     jy_fix(result)
 
     space_and_superscript_process(result)
@@ -962,4 +963,3 @@ def result_process(result,save_file):
     for data in result:
         f.write(json.dumps(data,ensure_ascii=False)+'\n')
     return final_result
-    # f = io.open('D:/new_model_29_7votes_fix_{}.json'.format(count),'w',encoding='utf-8')

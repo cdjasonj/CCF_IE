@@ -15,13 +15,13 @@ from keras.callbacks import LearningRateScheduler
 from copy import deepcopy
 import keras.backend as K
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-train_data = json.load(open('../input/train_data_me.json'))
-dev_data = json.load(open('../input/dev_data_me.json'))
-test_data = json.load(open('../input/test_data_me2.json'))
-id2predicate, predicate2id = json.load(open('../input/all_50_schemas_me.json'))
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+train_data = json.load(open('input/train_data_me.json'))
+dev_data = json.load(open('input/dev_data_me.json'))
+test_data = json.load(open('input/test_data_me2.json'))
+id2predicate, predicate2id = json.load(open('input/all_50_schemas_me.json'))
 id2predicate = {int(i): j for i, j in id2predicate.items()}
-id2char, char2id = json.load(open('../input/all_chars_me.json'))
+id2char, char2id = json.load(open('input/all_chars_me.json'))
 
 char_size = 128
 num_classes = len(id2predicate)
@@ -59,7 +59,7 @@ class test_data_generator:
         self.tokenizer = Tokenizer(self.token_dict)
         self.cache_data = []
         self.vocabs = set()
-        with open('/home/ccit/tkhoon/baiduie/sujianlin/myself_model/bert/chinese_L-12_H-768_A-12/vocab.txt',
+        with open(dict_path,
                   encoding='utf8') as f:
             for l in f:
                 self.vocabs.add(l.replace('\n', ''))
@@ -195,7 +195,7 @@ class data_generator:
         self.tokenizer = Tokenizer(self.token_dict)
         self.cache_data = []
         self.vocabs = set()
-        with open('/home/ccit/tkhoon/baiduie/sujianlin/myself_model/bert/chinese_L-12_H-768_A-12/vocab.txt',
+        with open(dict_path,
                   encoding='utf8') as f:
             for l in f:
                 self.vocabs.add(l.replace('\n', ''))
@@ -565,16 +565,23 @@ def scheduler(epoch):
         else:
             return lr
 
-for i in range(4):
+for i in range(8):
     if i == 0:
-        # part = 41
-        continue
+        part = 9
     elif i == 1:
-        part = 42
+        part = 10
     elif i == 2:
-        part = 43
+        part = 11
+    elif i == 3:
+        part = 12
+    elif i == 4:
+        part = 13
+    elif i == 5:
+        part = 14
+    elif i == 6:
+        part = 15
     else:
-        part = 44
+        part = 16
     reduce_lr = LearningRateScheduler(scheduler, verbose=1)
     train_model, subject_model, object_model = build_model_from_config(config_path, checkpoint_path, seq_len=180)
     train_D = data_generator(train_data, 32)

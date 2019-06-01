@@ -550,7 +550,7 @@ def add_cpgs(objs):
 #     return re_dict,re_souce_dict
 def get_ent_type(  ):
     type_dict = {}
-    with open('D:/data/IE/all_50_schemas','r',encoding='utf8') as f:
+    with open('../inputs/all_50_schemas','r',encoding='utf8') as f:
         for l in f:
             a = json.loads(l)
             t = {}

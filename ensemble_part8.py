@@ -15,13 +15,13 @@ from tqdm import tqdm
 from keras.callbacks import LearningRateScheduler
 
 model_name = 'bert_so_s'
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-train_data = json.load(open('../input/train_data_me.json'))
-dev_data = json.load(open('../input/dev_data_me.json'))
-test_data = json.load(open('../input/test_data_me2.json'))
-id2predicate, predicate2id = json.load(open('../input/all_50_schemas_me_overlap.json'))
+os.environ['CUDA_VISIBLE_DEVICES'] = '8'
+train_data = json.load(open('input/train_data_me.json'))
+dev_data = json.load(open('input/dev_data_me.json'))
+test_data = json.load(open('input/test_data_me2.json'))
+id2predicate, predicate2id = json.load(open('input/all_50_schemas_me_overlap.json'))
 id2predicate = {int(i): j for i, j in id2predicate.items()}
-id2char, char2id = json.load(open('../input/all_chars_me.json'))
+id2char, char2id = json.load(open('input/all_chars_me.json'))
 # word2id = json.load(open('input/word2id.json'))
 
 from copy import deepcopy
@@ -31,13 +31,9 @@ num_classes = len(id2predicate)
 debug = False
 ML = 180
 
-config_path = '/home/ccit/tkhoon/baiduie/sujianlin/myself_model/bert/chinese_L-12_H-768_A-12/bert_config.json'
-checkpoint_path = '/home/ccit/tkhoon/baiduie/sujianlin/myself_model/bert/chinese_L-12_H-768_A-12/bert_model.ckpt'
-dict_path = '/home/ccit/tkhoon/baiduie/sujianlin/myself_model/bert/chinese_L-12_H-768_A-12/vocab.txt'
-#
-# config_path = '/home/ccit22/m_minbo/chinese_L-12_H-768_A-12/bert_config.json'
-# checkpoint_path = '/home/ccit22/m_minbo/chinese_L-12_H-768_A-12/bert_model.ckpt'
-# dict_path = '/home/ccit22/m_minbo/chinese_L-12_H-768_A-12/vocab.txt'
+config_path = 'bert/chinese_L-12_H-768_A-12/bert_config.json'
+checkpoint_path = 'bert/chinese_L-12_H-768_A-12/bert_model.ckpt'
+dict_path = 'bert/chinese_L-12_H-768_A-12/vocab.txt'
 
 
 if debug:
@@ -574,6 +570,7 @@ def comput_f1(dev_file):
     F = 2*P*R/(R+P)
     return P,R,F
 
+
 def predict_test_batch(mode):
     if mode == 'test':
         weight_file = weight_name
@@ -643,33 +640,28 @@ def scheduler(epoch):
         else:
             return lr
 
-
-for i in range(2):
+for i in range(15):
     train_model, subject_model, object_model = build_model_from_config(config_path, checkpoint_path, seq_len=180)
-    # train_D = data_generator(train_data, 32)
-    # reduce_lr = LearningRateScheduler(scheduler, verbose=1)
-    # best_f1 = 0
-    if i == 0:
-        weight_name = 'version1_22.weights'
-        dev_result = 'version1_dev22.json'
-        test_result = 'test_B/version1_22_2.json'
-    else:
-        weight_name = 'version1_23.weights'
-        dev_result = 'version1_dev23.json'
-        test_result = 'test_B/version1_23_2.json'
+    train_D = data_generator(train_data, 32)
+    reduce_lr = LearningRateScheduler(scheduler, verbose=1)
+    best_f1 = 0
+    i+=1
+    i+=15
+    weight_name = 'version1_{}.weights'.format(i)
+    dev_result = 'version1_dev{}.json'.format(i)
+    test_result = 'test_B/version1_{}_2.json'.format(i)
 
-    # for i in range(1,7):
+    for i in range(1,7):
 
-        # train_model.fit_generator(train_D.__iter__(),
-        #                           steps_per_epoch=len(train_D),
-        #                           epochs=1,
-        #                           callbacks=[reduce_lr]
-        #                           )
-        # if (i) % 2 == 0 : #两次对dev进行一次测评,并对dev结果进行保存
-        #     print('进入到这里了哟~')
-            # P, R, F = predict_test_batch('dev')
-            # if F > best_f1 :
-            #     train_model.save_weights(weight_name)
-            #     print('当前第{}个epoch，准确度为{},召回为{},f1为：{}'.format(i,P,R,F))
+        train_model.fit_generator(train_D.__iter__(),
+                                  steps_per_epoch=len(train_D),
+                                  epochs=1,
+                                  callbacks=[reduce_lr]
+                                  )
+        if (i) % 2 == 0 : #两次对dev进行一次测评,并对dev结果进行保存
+            P, R, F = predict_test_batch('dev')
+            if F > best_f1 :
+                train_model.save_weights(weight_name)
+                print('当前第{}个epoch，准确度为{},召回为{},f1为：{}'.format(i,P,R,F))
     predict_test_batch('test')
     K.clear_session()

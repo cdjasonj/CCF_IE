@@ -35,7 +35,7 @@ result  = [result1,result2,result3,result4,result5,result6,result7,result8,
            ,result18,result19,result20,result21,result22,result23,result24,result25,result26,result27,result28,result29]
 
 for i in range(1,30):
-    result_file_name = 'version1_'+str(i)+'_2.json'
+    result_file_name = '../outputs/version1_'+str(i)+'_2.json'
     _result = result[i-1]
     with open(result_file_name,encoding='utf-8') as fr:
         for line in fr:
@@ -91,6 +91,6 @@ for idx,spo in enumerate(weights_spo):
     final_result.append(dic)
 
 import io
-f = io.open('new_model_29_7votes_{}.json'.format(count),'w',encoding='utf-8')
+f = io.open('../outputs/new_model_30_7votes.json','w',encoding='utf-8')
 for data in final_result:
     f.write(json.dumps(data,ensure_ascii=False)+'\n')

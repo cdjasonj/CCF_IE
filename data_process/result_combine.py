@@ -63,9 +63,3 @@ def compareZB(source, target,file_name):
         new_f.write(json.dumps(new_dict, ensure_ascii=False)+'\n')
     print ('最终添加了{}个'.format(str(count)))
     new_f.close()
-
-    # 比较二者作曲-歌手 编剧-导演的差异
-# file_name = 'D:/combine_data.json'
-# source = 'D:/final_result_5_13_8votes_45_fix23960.json'
-# target = 'D:/new_model_29_7votes_fix_23988.json'
-# compareZB(source, target)
