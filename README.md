@@ -12,7 +12,9 @@ pip install tqdm
 
 Usage
 -----
-run ``` python main.py gpu_num1 gpu_num2 gpu_num3 gpu_num4 gpu_num5``` ==> outputs/final_data.json
+run ``` python main.py gpu_num1 gpu_num2 gpu_num3 gpu_num4 gpu_num5``` <br>
+The test datasets predictions will be saved into a file called ```final_data.json ```in the``` outputs```:
 
-We used multiple GPU for training and prediction, so we also specified five GPUS for training and forecasting in this program.
+We used multiple GPUs for training and prediction, so we also specified multiple GPUS for training and forecasting in this program.
+
 
