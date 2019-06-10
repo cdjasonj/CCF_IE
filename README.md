@@ -1,9 +1,11 @@
 Environment:
 -----
-python 3+ tensorflow 1.10+ keras 2.2.4+ Keras-bert:0.39.0
+python 3+ tensorflow 1.10+ keras 2.2.4+ 
 
 Install
 -----
+There are two open source Python packages need to be installed.<br>
+keras-bert from here https://github.com/CyberZHG/keras-bert
 
 ```python
 pip install keras-bert
