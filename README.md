@@ -1,6 +1,17 @@
-#一级标题
-##二级标题
-###三级标题
-####四级标题
-#####五级标题
-######六级标题
+Environment:
+-----
+python 3+ tensorflow 1.10 keras 2.2.4+ Keras-bert:0.39.0
+
+Install
+-----
+
+```python
+pip install keras-bert
+pip install tqdm
+```
+
+Usage
+-----
+run ``` python main.py gpu_num1 gpu_num2 gpu_num3 gpu_num4 gpu_num5``` ==> outputs/final_data
+
+
