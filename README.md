@@ -1,4 +1,4 @@
-Environment:
+﻿Environment:
 -----
 python 3+ tensorflow 1.10+ keras 2.2.4+ 
 
@@ -37,3 +37,16 @@ The test datasets predictions will be saved into a file called ```final_data.jso
 We used multiple GPUs for training and prediction, so we also specified multiple GPUS for training and forecasting in this program.  
 
 
+baseline: https://github.com/bojone/kg-2019-baseline
+----
+我们在苏神baseline上的工作:<br>
+1, BERT<br>
+2，优化了标注方式，针对重叠关系的重新设定了多信息的标注方式<br>
+3，简化了下游模型结构，尝试了self-attention和普通点乘attention<br>
+4，投票方式简单集成<br>
+5，规则数据后处理和预处理。<br>
+
+结果
+---
+A榜：0.889， B榜：0.8872 , 最终B榜第五（原本第六，第四名放弃）。<br>
+ps: A,B榜有差距差距的原因，是因为我不小心把几个用来集成的模型权重给用debug数据跑的模型覆盖了。。。。重新跑全部EPOCH时间又不够，就以重新跑了几个更少EPOCH的模型替代，导致重新预测效果变差，坑了。。。。
