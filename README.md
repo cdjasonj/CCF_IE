@@ -46,6 +46,12 @@ baseline: https://github.com/bojone/kg-2019-baseline
 4，投票方式简单集成<br>
 5，规则数据后处理和预处理。<br>
 
+参考文献：
+Global Normalization of Convolutional Neural Networks for Joint Entity and Relation Classification<br>
+One for All Neural Joint Modeling of Entities and Even<br>
+Table ﬁlling multi-task recurrent neural network for joint entity and relation extraction<br
+Joint Extraction of Entities and Relations Based on a Novel Tagging Scheme<br>
+End-to-End Neural Relation Extraction with Global Optimization<br
 结果
 ---
 A榜：0.889， B榜：0.8872 , 最终B榜第五（原本第六，第四名放弃）。<br>
